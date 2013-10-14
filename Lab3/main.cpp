@@ -1,7 +1,10 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
+#include <cmath>
 using namespace std;
+
+#define PI 3.14159265
 
 class Shape
 {
@@ -12,15 +15,115 @@ public:
 class TwoDShape: public Shape 
 {
 public:
+    TwoDShape();
     TwoDShape(int);
 protected:
     int measurement;
 };
 
+class ThreeDShape: public Shape
+{
+public:
+    ThreeDShape();
+protected:
+    int measurement1;
+    int measurement2;
+};
+
+ThreeDShape::ThreeDShape()
+{
+    measurement1 = 3;
+    measurement2 = 4;
+}
+
+class Parallelepiped: public ThreeDShape
+{
+public:
+    Parallelepiped(int);
+    int getVolume();
+private:
+    int length;
+    int heigth; 
+    int width;
+};
+
+class Tetrahedron: public ThreeDShape
+{
+public:
+    Tetrahedron();
+    float getVolume();
+private:
+    int side;
+    int heigth;
+};
+
+Tetrahedron::Tetrahedron()
+{
+    side = measurement1;
+    heigth = measurement2;
+}
+
+float Tetrahedron::getVolume()
+{
+    return heigth * side * side * sin(PI/3); 
+}
+
+Parallelepiped::Parallelepiped(int inputHeigth)
+{
+    length = measurement1;
+    width = measurement2;
+    heigth = inputHeigth;
+}
+
+int Parallelepiped::getVolume()
+{
+    return length * heigth * width;
+}
+class Cylinder: public ThreeDShape
+{
+public:
+    Cylinder();
+    float getVolume();
+private:
+    int baseRadius;
+    int heigth;
+};
+
+Cylinder::Cylinder()
+{
+    baseRadius = measurement1;
+    heigth = measurement2;
+}
+
+float Cylinder::getVolume()
+{
+    return 3.14 * pow(baseRadius,2) * heigth;
+}
+
+class Circle: public TwoDShape
+{
+public:
+    Circle();
+    float getArea();
+private:
+    int radius;
+};
+
+float Circle::getArea()
+{
+    return 3.14 * pow(radius, 2);
+}
+
+
+Circle::Circle() 
+{
+    this->radius = measurement;
+}
+
 class Rectangle: public TwoDShape
 {
 public:
-    Rectangle(int, int);
+    Rectangle(int);
     int getArea();
 private:
     int heigth;
@@ -30,14 +133,14 @@ private:
 class Treangle: public TwoDShape
 {
 public:
-    Treangle(int, int);
+    Treangle(int);
     int getArea();
 private:
     int heigth;
     int base;
 };
 
-Rectangle::Rectangle(int base, int heigth) : TwoDShape(heigth)
+Rectangle::Rectangle(int base)
 {
     this->base = base;
     this->heigth = measurement;
@@ -53,10 +156,15 @@ int Treangle::getArea()
     return heigth * base / 2;
 }
 
-Treangle::Treangle(int heigth, int base) : TwoDShape(base)
+Treangle::Treangle(int heigth)
 {
     this->heigth = heigth;
     this->base = measurement;
+}
+
+TwoDShape::TwoDShape()
+{
+    measurement = 2;
 }
 
 TwoDShape::TwoDShape(int value)
@@ -71,11 +179,19 @@ void Shape::printShape()
 
 int main()
 {
-    Treangle treangle(5, 2);
-    Rectangle rectangle(3,4);
+    Treangle treangle(5);
+    Rectangle rectangle(3);
+    Circle circle;
+    Cylinder cylinder;
+    Tetrahedron tetrahedron;
+    Parallelepiped parallelepiped(5);    
 
-    cout << treangle.getArea();
-    cout << rectangle.getArea();  
+    cout << tetrahedron.getVolume() << '\n';
+    cout << parallelepiped.getVolume() << '\n';
+    cout << cylinder.getVolume() << '\n';
+    cout << circle.getArea() << '\n';
+    cout << treangle.getArea() << '\n';
+    cout << rectangle.getArea() << '\n';  
     return 0;
 }
 
