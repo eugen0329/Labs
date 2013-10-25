@@ -18,7 +18,7 @@ public:
     String operator+=(String);
     bool   operator==(String);
     char operator[](int);
-    String  operator() (char *);
+    void  operator() (int, int);
     friend String operator+(int, String);
     friend istream& operator>>(istream&, String&);    
     friend ostream& operator<<(ostream&, String);
@@ -29,7 +29,7 @@ private:
 
 char String::operator[](int index)
 {
-    if(index > strlen(string) - 1)
+    if((unsigned)index > strlen(string) - 1)
     {
         cout << "Index greater than the size of the string\n";
         exit(1);
@@ -53,18 +53,21 @@ istream& operator>>(istream& stream, String& obj)
     return stream;    
 }
  
-String String::operator() (char* inputString)               //Добавляет
-{                                                           //полученную строку
-    if(strlen(string) + strlen(inputString) >= STRING_SIZE) //в конец строки класса
+void String::operator() (int from, int to)               //Добавляет
+{  
+                                                             //полученную строку
+    if(strlen(string) < (unsigned) from || strlen(string) < (unsigned) to || to < from) //в конец строки класса
     {
+        cout << "Incorrect using of operator ()" << endl;
         exit(1);
     }
+    int i;
     String temp;
-    strcat(temp.string, this->string);
-    strcat(temp.string, inputString);
-    
-    return temp;
-
+    for(i = from; i < to ;i++)
+    {
+        cout << string[i];
+    }
+    cout << endl;
 }
 
 bool String::operator==(String obj2)
@@ -132,7 +135,6 @@ ostream& operator <<(ostream& stream, String obj)
 int main()
 {
     int index;
-    char bufferString[STRING_SIZE];
     String string1("Hello"), string2;
     cout << "The first string is:\n  " << string1 <<"\nEnter the second string:\n  ";
     cin >> string2;
@@ -144,22 +146,18 @@ int main()
     {
         cout << "Strings are not equal\n\n";
     }
-    cout << "Concatentated string1 with string2:\n  "<< string1 + string2 << '\n';
+    cout << "The result of string1 + string2:\n  "<< string1 + string2 << '\n';
     cout << "Enter the number of symbol you want to show in string2(from \"0\")\n";
     cin >> index;
-    if(cin.fail())
-    {
-        cout << "Wrong input\n";
-        exit(1);
-    }
-    else
-    {
-        cout << string2[index] << '\n';
-    }
-    cout << "Enter the string you want to concatentate with string1\n";
-    cin >> bufferString;
-    string1 = string1(bufferString);
-    cout << "String1:\n  " << string1;
+    cout << string2[index] << endl;
+    cout << "The result of string(2,4):\n  ";
+    string1(2,4);
+    cout << "The result of string1 += string 2:\n  ";
+    string1 += string2;
+    cout << "string1 = " << string1 << " string2 = " << string2 << endl;
+    cout << "The result of string1 = string2:\n  ";
+    string1 = string2;
+    cout << "string1 = " << string1 << " string2 = " << string2 << endl;
     return 0;
 }
 
