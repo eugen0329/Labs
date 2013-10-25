@@ -147,7 +147,15 @@ int main()
     cout << "Concatentated string1 with string2:\n  "<< string1 + string2 << '\n';
     cout << "Enter the number of symbol you want to show in string2(from \"0\")\n";
     cin >> index;
-    cout << string2[index] << '\n';
+    if(cin.fail())
+    {
+        cout << "Wrong input\n";
+        exit(1);
+    }
+    else
+    {
+        cout << string2[index] << '\n';
+    }
     cout << "Enter the string you want to concatentate with string1\n";
     cin >> bufferString;
     string1 = string1(bufferString);
