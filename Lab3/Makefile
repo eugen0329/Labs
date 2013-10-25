@@ -1,4 +1,4 @@
-OBJ = main.o 
+OBJ = main.o ThreeDShapes.o TwoDShapes.o shapes.o 
 CXXFLAGS = -Wall -pedantic-errors -g
 BINARY = bin
 all: $(BINARY)
