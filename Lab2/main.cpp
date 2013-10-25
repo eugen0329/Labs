@@ -19,7 +19,6 @@ public:
     bool   operator==(String);
     char operator[](int);
     void  operator() (int, int);
-    friend String operator+(int, String);
     friend istream& operator>>(istream&, String&);    
     friend ostream& operator<<(ostream&, String);
  
@@ -53,10 +52,10 @@ istream& operator>>(istream& stream, String& obj)
     return stream;    
 }
  
-void String::operator() (int from, int to)               //Добавляет
-{  
-                                                             //полученную строку
-    if(strlen(string) < (unsigned) from || strlen(string) < (unsigned) to || to < from) //в конец строки класса
+void String::operator() (int from, int to)               //Выводит символы
+{                                                        //строки от from
+    if(strlen(string) < (unsigned) from ||               //до to 
+       strlen(string) < (unsigned) to || to < from) 
     {
         cout << "Incorrect using of operator ()" << endl;
         exit(1);
@@ -150,14 +149,14 @@ int main()
     cout << "Enter the number of symbol you want to show in string2(from \"0\")\n";
     cin >> index;
     cout << string2[index] << endl;
-    cout << "The result of string(2,4):\n  ";
+    cout << "The result of call string(2,4):\n  ";
     string1(2,4);
     cout << "The result of string1 += string 2:\n  ";
     string1 += string2;
-    cout << "string1 = " << string1 << " string2 = " << string2 << endl;
+    cout << "string1 = " << string1 << "  string2 = " << string2 << endl;
     cout << "The result of string1 = string2:\n  ";
     string1 = string2;
-    cout << "string1 = " << string1 << " string2 = " << string2 << endl;
+    cout << "string1 = " << string1 << "  string2 = " << string2 << endl;
     return 0;
 }
 
