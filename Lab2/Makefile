@@ -1,13 +1,13 @@
-OBJ = main.o 
-CXXFLAGS = -Wall -pedantic-errors -g
+OBJ = main.o string.o 
+CPPFLAGS = -Wall -pedantic-errors -g
 BINARY = bin
 all: $(BINARY)
 
 $(BINARY): $(OBJ)
-	g++ $(CXXFLAGS) $(OBJ) -o $(BINARY)
+	g++ $(CPPFLAGS) $(OBJ) -o $(BINARY)
 
 %.o : %.c
-	g++ $(CXXFLAGS) -c $<
+	g++ $(CPPFLAGS) -c $<
 
 clean:
 	rm $(BINARY) $(OBJ)
