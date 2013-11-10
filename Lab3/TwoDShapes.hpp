@@ -1,13 +1,22 @@
 #ifndef TWO_D_SHAPES_HPP
 #define TWO_D_SHAPES_HPP
 
-#include "shapes.hpp"
+#include "Shapes.hpp"
+
+class TwoDShape: public Shape 
+{
+public:
+    float getArea();
+    float getVolume(); 
+    virtual ~TwoDShape();
+};
 
 class Circle: public TwoDShape
 {
 public:
-    Circle();
+    Circle(int);
     float getArea();
+    virtual ~Circle();
 private:
     int radius;
 };
@@ -15,8 +24,9 @@ private:
 class Treangle: public TwoDShape
 {
 public:
-    Treangle(int);
+    Treangle(int, int);
     float getArea();
+    virtual ~Treangle();
 private:
     int heigth;
     int base;
@@ -25,8 +35,9 @@ private:
 class Rectangle: public TwoDShape
 {
 public:
-    Rectangle(int);
+    Rectangle(int, int);
     float getArea();
+    virtual ~Rectangle();
 private:
     int heigth;
     int base;

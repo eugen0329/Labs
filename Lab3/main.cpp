@@ -4,27 +4,40 @@
 
 using namespace std;
 
-
-void Shape::printShape()
-{
-    cout << "Shape";
-}
-
 int main()
 {
-    Treangle treangle(5);
-    Rectangle rectangle(3);
-    Circle circle;
-    Cylinder cylinder;
-    Tetrahedron tetrahedron;
-    Parallelepiped parallelepiped(5);    
+    Treangle treangle(5, 2);
+    Rectangle rectangle(3, 2);
+    Circle circle(2);
+    Cylinder cylinder(5, 2);
+    Tetrahedron tetrahedron(3, 2);
+    Parallelepiped parallelepiped(5, 2, 3);    
+    Shape *basePointer;
 
-    cout << tetrahedron.getVolume() << '\n';
-    cout << parallelepiped.getVolume() << '\n';
-    cout << cylinder.getVolume() << '\n';
-    cout << circle.getArea() << '\n';
-    cout << treangle.getArea() << '\n';
-    cout << rectangle.getArea() << '\n';  
+    basePointer = &tetrahedron;
+    cout << "Tetrahedron volume = ";
+    cout << basePointer->getVolume() << endl;
+
+    basePointer = &parallelepiped;
+    cout << "parallelepiped volume = ";
+    cout << basePointer->getVolume() << endl;
+
+    basePointer = &cylinder;
+    cout << "cylinder volume = ";
+    cout << basePointer->getVolume() << endl;
+    
+    basePointer = &circle;
+    cout << "Circle area = ";
+    cout << basePointer->getArea() << endl;
+    
+    basePointer = &treangle;
+    cout << "treangle area = ";
+    cout << basePointer->getArea() << endl;
+    
+    basePointer = &rectangle;
+    cout << "Rectangle area = ";
+    cout << basePointer->getArea() << endl;
+
     return 0;
 }
 

@@ -1,13 +1,31 @@
 #include "TwoDShapes.hpp"
 
-TwoDShape::TwoDShape()
+Treangle::~Treangle()
 {
-    measurement = 2;
 }
 
-TwoDShape::TwoDShape(int value)
+Circle::~Circle()
 {
-    this->measurement = value;
+}
+
+Rectangle::~Rectangle()
+{
+}
+
+TwoDShape::~TwoDShape()
+{
+}
+
+float TwoDShape::getArea()
+{
+    cout << "The call of getArea() of class TwoDShape is no sense";
+    return 0;
+}
+
+float TwoDShape::getVolume()
+{
+    cout << "The call of getArea() of class TwoDShape is no sense";
+    return 0;
 }
 
 float Circle::getArea()
@@ -15,16 +33,15 @@ float Circle::getArea()
     return PI * pow(radius, 2);
 }
 
-
-Circle::Circle() 
+Circle::Circle(int radius) 
 {
-    this->radius = measurement;
+    this->radius = radius;
 }
 
-Rectangle::Rectangle(int base)
+Rectangle::Rectangle(int base, int heigth)
 {
     this->base = base;
-    this->heigth = measurement;
+    this->heigth = heigth;
 }
 
 float Rectangle::getArea()
@@ -37,10 +54,9 @@ float Treangle::getArea()
     return heigth * base / 2;
 }
 
-Treangle::Treangle(int heigth)
+Treangle::Treangle(int heigth, int base)
 {
     this->heigth = heigth;
-    this->base = measurement;
+    this->base = base;
 }
-
 

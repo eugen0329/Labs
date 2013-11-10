@@ -1,4 +1,4 @@
-OBJ = main.o ThreeDShapes.o TwoDShapes.o shapes.o 
+OBJ = main.o ThreeDShapes.o TwoDShapes.o 
 CXXFLAGS = -Wall -pedantic-errors -g
 BINARY = bin
 all: $(BINARY)
@@ -6,8 +6,11 @@ all: $(BINARY)
 $(BINARY): $(OBJ)
 	g++ $(CXXFLAGS) $(OBJ) -o $(BINARY)
 
-%.o : %.c
+%.o : %.cpp
 	g++ $(CXXFLAGS) -c $<
 
 clean:
 	rm $(BINARY) $(OBJ)
+
+#ThreeDShapes.o
+#
