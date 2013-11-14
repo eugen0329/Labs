@@ -6,12 +6,13 @@
 class ThreeDShape: public Shape
 {
 public:
-    ThreeDShape();
+    ThreeDShape(int, int);
     float getArea();
     float getVolume();
     virtual ~ThreeDShape();
 protected:
     int heigth;
+    int measurement2;
 };
 
 class Parallelepiped: public ThreeDShape
@@ -22,8 +23,6 @@ public:
     virtual ~Parallelepiped();
 private:
     int length;
-    int width;
-    
 };
 
 class Tetrahedron: public ThreeDShape
@@ -32,8 +31,6 @@ public:
     Tetrahedron(int, int);
     float getVolume();
     virtual ~Tetrahedron();
-private:
-    int side;
 };
 
 class Cylinder: public ThreeDShape
@@ -42,8 +39,6 @@ public:
     Cylinder(int, int);
     float getVolume();
     virtual ~Cylinder();
-private:
-    int baseRadius;
 };
 
 #endif

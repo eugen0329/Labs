@@ -6,15 +6,15 @@ using namespace std;
 
 int main()
 {
-    Treangle treangle(5, 2);
-    Rectangle rectangle(3, 2);
-    Circle circle(2);
-    Cylinder cylinder(5, 2);
-    Tetrahedron tetrahedron(3, 2);
-    Parallelepiped parallelepiped(5, 2, 3);    
-    Shape *basePointer;
+    Treangle treangle(5, 2);                // arg1 = base, arg2 = heigth
+    Rectangle rectangle(3, 2);              // arg1 = base, arg2 = heigth
+    Circle circle(2);                       // arg1 = radius
+    Cylinder cylinder(5, 2);                // arg1 = baseRadius, arg2 = heigth
+    Tetrahedron tetrahedron(3, 2);          // arg1 = baseSide, arg2 = heigth
+    Parallelepiped parallelepiped(5, 2, 3); // arg1 = length, arg2 = width, arg3
+    Shape *basePointer[6];                     // = heigth
 
-    basePointer = &tetrahedron;
+    basePointer[0] = new tetrahedron(3,2);
     cout << "Tetrahedron volume = ";
     cout << basePointer->getVolume() << endl;
 

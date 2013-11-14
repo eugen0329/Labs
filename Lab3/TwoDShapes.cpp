@@ -1,5 +1,10 @@
 #include "TwoDShapes.hpp"
 
+TwoDShape::TwoDShape(int measurement1)
+{
+    this->measurement1 = measurement1;
+}
+
 Treangle::~Treangle()
 {
 }
@@ -30,33 +35,30 @@ float TwoDShape::getVolume()
 
 float Circle::getArea()
 {
-    return PI * pow(radius, 2);
+    return PI * pow(measurement1, 2);
 }
 
-Circle::Circle(int radius) 
+Circle::Circle(int radius) : TwoDShape(radius)
 {
-    this->radius = radius;
 }
 
-Rectangle::Rectangle(int base, int heigth)
+Rectangle::Rectangle(int base, int heigth) : TwoDShape(heigth)
 {
     this->base = base;
-    this->heigth = heigth;
 }
 
 float Rectangle::getArea()
 {
-    return base * heigth;
+    return base * measurement1;
 }
 
 float Treangle::getArea()
 {
-    return heigth * base / 2;
+    return measurement1 * base / 2;
 }
 
-Treangle::Treangle(int heigth, int base)
+Treangle::Treangle(int base, int heigth) : TwoDShape(heigth)
 {
-    this->heigth = heigth;
     this->base = base;
 }
 

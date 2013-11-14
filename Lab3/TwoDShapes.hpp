@@ -6,9 +6,12 @@
 class TwoDShape: public Shape 
 {
 public:
+    TwoDShape(int);
     float getArea();
     float getVolume(); 
     virtual ~TwoDShape();
+protected:
+    int measurement1;
 };
 
 class Circle: public TwoDShape
@@ -17,8 +20,6 @@ public:
     Circle(int);
     float getArea();
     virtual ~Circle();
-private:
-    int radius;
 };
 
 class Treangle: public TwoDShape
@@ -28,7 +29,6 @@ public:
     float getArea();
     virtual ~Treangle();
 private:
-    int heigth;
     int base;
 };
 
@@ -39,7 +39,6 @@ public:
     float getArea();
     virtual ~Rectangle();
 private:
-    int heigth;
     int base;
 };
 

@@ -33,9 +33,23 @@ String String::operator=(String inputObject)
     {
         delete [] string;
         string = new char [inputObject.size];
+        size = inputObject.size;
     }
-    size = inputObject.size;
     strncpy(string, inputObject.string, size);
+
+        
+    return *this;
+}
+
+String String::operator=(const char* inputString)
+{
+    if((unsigned) size != strlen(inputString))
+    {
+        delete [] string;
+        size = strlen(inputString) + 1;
+        string = new char [size];
+    }
+    strncpy(string, inputString, size);
 
         
     return *this;
@@ -43,7 +57,7 @@ String String::operator=(String inputObject)
 
 void String::operator() (int from, int to)               //Выводит символы
 {                                                        //строки от from
-    int i, end;
+    int i;
     if(from < 0 || from > to || to >= size)
     {
         cout << "Error in function String::operator()" << endl;

@@ -1,7 +1,9 @@
 #include "ThreeDShapes.hpp"
 
-ThreeDShape::ThreeDShape()
+ThreeDShape::ThreeDShape(int measurement2, int heigth)
 {
+    this->heigth = heigth;
+    this->measurement2 = measurement2;
 }
 
 ThreeDShape::~ThreeDShape()
@@ -32,37 +34,32 @@ float ThreeDShape::getArea()
     return 0;
 }
 
-Tetrahedron::Tetrahedron(int side, int heigth)
+Tetrahedron::Tetrahedron(int side, int heigth) : ThreeDShape(side, heigth)
 {
-    this->side = side;
-    this->heigth = heigth;
 }
 
 float Tetrahedron::getVolume()
 {
-    return heigth * side * side * sin(PI/3); 
+    return heigth * measurement2 * measurement2 * sin(PI/3); 
 }
 
-Parallelepiped::Parallelepiped(int length, int width, int heigth)
+Parallelepiped::Parallelepiped(int length, int width, int heigth) :
+ThreeDShape(width, heigth)
 {
     this->length = length;
-    this->width = width;
-    this->heigth = heigth;
 }
 
 float Parallelepiped::getVolume()
 {
-    return length * heigth * width;
+    return length * heigth * measurement2;
 }
 
-Cylinder::Cylinder(int baseRadius, int heigth)
+Cylinder::Cylinder(int baseRadius, int heigth) : ThreeDShape(baseRadius, heigth)
 {
-    this->baseRadius = baseRadius;
-    this->heigth = heigth;
 }
 
 float Cylinder::getVolume()
 {
-    return PI * pow(baseRadius, 2) * heigth;
+    return PI * pow(measurement2, 2) * heigth;
 }
 

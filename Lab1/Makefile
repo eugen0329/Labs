@@ -1,7 +1,7 @@
-OBJ = main.o 
+OBJ = main.o Matrix.o
 CXXFLAGS = -Wall -pedantic-errors -g
 BINARY = bin
-all: $(BINARY)
+all: $(BINARY)	
 
 $(BINARY): $(OBJ)
 	g++ $(CXXFLAGS) $(OBJ) -o $(BINARY)
