@@ -9,6 +9,7 @@ int main()
 {
     Milk milk(100, 1, "ASd");
     Node<Milk, int> milkTree(milk, milk.getPrice());
+
     cout << milk << endl;
     return 0;
 }

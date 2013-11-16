@@ -1,4 +1,4 @@
-#include "tree.hpp"
+#include "tree.h"
 
 template <class type1, class type2>
 Node<type1, type2>::Node(type1 inputObject, type2 key)
@@ -13,9 +13,9 @@ template <class type1, class type2>
 void Node<type1, type2>::add(type1 someClass, type2 inputKey)
 {
     int i;
-    Node* pointer;
+    type1* pointer;
 
-    pointer = this;
+    pointer = this->object;
     while(true) {
         if(pointer->key < inputKey ) {
             if(pointer->left != NULL) {
@@ -37,9 +37,7 @@ void Node<type1, type2>::add(type1 someClass, type2 inputKey)
     }
      
     pointer->key = inputKey;
-    pointer->object = someClass;
- 
-    return *this;
+    
 }
 
 template <class type1, class type2>

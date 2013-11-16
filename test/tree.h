@@ -3,12 +3,19 @@
 
 #include <iostream>
 
+class SomeClass {
+public:
+    int key;
+    int number;
+};
+
+
 template <class type1, class type2> 
 class Node {
 public:
-    explicit Node(type1, type2);
+    Node(type1, type2);
     void add(type1, type2);
-
+    type2 getKey() { return key;}
     ~Node();
 private:
     type1 object;
