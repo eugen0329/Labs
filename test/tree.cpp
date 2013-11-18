@@ -1,5 +1,6 @@
 #include "tree.h"
 
+
 template <class type1, class type2>
 Node<type1, type2>::Node(type1 inputObject, type2 key)
 {
