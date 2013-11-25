@@ -1,18 +1,24 @@
 #include <cstdlib>
 #include <iostream>
-#include "tree.h"
+#include <string>
 
+class Mycl {
+pubclic:
+    int a;
+    friend ostream& operetor<< (ostream&, Mycl);
+};
 using namespace std;
 
+ostream& operetor<< (ostream& outStream, Mycl obj)
+{
+    outStream << obj.a;
+    return ostream;
+}
 int main()
 {
-    SomeClass object;
-    object.key = 2;
-    object.number = 10;
-
-    Node<SomeClass, int> root(object, object.key);
-
-    cout << root.getKey();
+    Mycl obj;
+    obj.a = 2;
+    cout << obj;
     return 0;
 }
 

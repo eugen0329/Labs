@@ -1,4 +1,4 @@
-OBJ = main.o 
+OBJ = main.o Matrix.o mylib.o 
 CPPFLAGS = -Wall -pedantic-errors -g
 BINARY = bin
 all: $(BINARY)

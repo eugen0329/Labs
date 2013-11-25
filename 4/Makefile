@@ -1,4 +1,4 @@
-OBJ = main.o tree.o string.o products.o
+OBJ = main.o products.o string.o 
 CPPFLAGS = -Wall -pedantic-errors -g
 BINARY = bin
 all: $(BINARY)

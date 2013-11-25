@@ -1,4 +1,4 @@
-#include "string.hpp"
+#include "string.h"
 
 char& String::operator[](int index)
 {
@@ -33,8 +33,8 @@ String String::operator=(String inputObject)
     {
         delete [] string;
         string = new char [inputObject.size];
-        size = inputObject.size;
     }
+    size = inputObject.size;
     strncpy(string, inputObject.string, size);
 
         
@@ -43,7 +43,7 @@ String String::operator=(String inputObject)
 
 String String::operator=(const char* inputString)
 {
-    if((unsigned) size != strlen(inputString))
+    if((unsigned) size != strlen(inputString) + 1)
     {
         delete [] string;
         size = strlen(inputString) + 1;
@@ -54,6 +54,7 @@ String String::operator=(const char* inputString)
         
     return *this;
 }
+
 
 void String::operator() (int from, int to)               //Выводит символы
 {                                                        //строки от from
@@ -100,7 +101,7 @@ ostream& operator <<(ostream& stream, String obj)
     {
         return stream;
     }
-    stream << obj.string << endl;
+    stream << obj.string;
     return stream;
 }
 
@@ -123,7 +124,7 @@ String::~String()
 istream& operator>>(istream& stream, String& obj)  
 {
     char buffer[STRING_SIZE];
-    stream.getline(buffer, STRING_SIZE);
+    stream >> buffer;
 
     if(obj.size != 0)
     {
