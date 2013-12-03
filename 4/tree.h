@@ -2,7 +2,6 @@
 #define TREE_HPP
 
 #include <iostream>
-#include <stack>
 
 template < class type1 > class Node;
 template < class type1 >
