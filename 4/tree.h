@@ -26,7 +26,7 @@ public:
     
     bool isEmptyNode;
 private:
-    int insertNodeInPlaceOfAnother(Node<type1>*, Node<type1>*);
+    int insertNodeInPlaceOfAnother(Node<type1>, Node<type1>**);
     type1 object;
     int key;
     Node *root;
@@ -227,16 +227,16 @@ template<class type1>
 }
 
 template<class type1>
-    int Node<type1>::insertNodeInPlaceOfAnother(Node* insertedNode, Node* node2)
+    int Node<type1>::insertNodeInPlaceOfAnother(Node<type1> insertedNode, Node<type1>** node2)
 {
 
     Node<type1>* tempPointer;
     
-    tempPointer = node2;
-    node2 = NULL;
-    node2 = new Node(insertedNode->object, insertedNode->key);
-    node2->root = this->root;
-    node2->left = tempPointer;
+    tempPointer = *node2;
+    *node2 = NULL;
+    *node2 = new Node(insertedNode->object, insertedNode->key);
+    (*node2)->root = this->root;
+    (*node2)->left = tempPointer;
 
     return 0;
 }
@@ -245,14 +245,15 @@ template<class type1>
     Node<type1> Node<type1>::operator+= (Node<type1>* obj2)
 {
     Node<type1>* pointer;
-    Node<type1>* tempPointer;
+    Node<type1>* pointerAdress;
 
     pointer = root;
     while (true) {
         if (obj2->key < pointer->key) {
             if(pointer->left) {
                 if(obj2->key > pointer->left) {
-                    insertNodeInPlaceOfAnother(obj2, pointer->left);
+                    pointerAdress = pointer->left;
+                    insertNodeInPlaceOfAnother(obj2, &pointerAdress);
                     break;
                 } else {
                     pointer = pointer->left;
@@ -265,7 +266,8 @@ template<class type1>
         } else {
             if(pointer->right) {
                 if(obj2->key > pointer->right) {
-                    insertNodeInPlaceOfAnother(obj2, pointer->right);
+                    pointerAdress = pointer->right;
+                    insertNodeInPlaceOfAnother(obj2, &pointerAdress);
                     break;
                 } else {
                     pointer = pointer->right;
