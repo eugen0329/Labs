@@ -15,18 +15,21 @@ public:
     Node(const Node<type1>&);
     ~Node();
     
+    int deleteNodeByKey(int key);
     int keyAreExists(int);
     long getSumOfTheKeys();
     int add(type1, int);
     type1 findElementWithKey(int);
-    Node operator= (Node*);
-    Node operator+= (Node*);
+    Node<type1> operator= (Node<type1>*);
+    Node operator+= (Node<type1>*);
     friend ostream& operator<< <> (ostream&, const Node<type1>&);
     
     bool isEmptyNode;
 private:
+    int insertNodeInPlaceOfAnother(Node<type1>*, Node<type1>*);
     type1 object;
     int key;
+    Node *root;
     Node *left;
     Node *right;
 };
@@ -79,6 +82,7 @@ template<class type1>
 template<class type1> 
     Node<type1>::Node(type1 inputObject, int key)
 {
+    this->root = this;
     this->object = inputObject;
     this->key = key;
     left = NULL;
@@ -90,6 +94,7 @@ template<class type1>
 {
     isEmptyNode = true;
     this->key = 0;
+    root = NULL;
     left = NULL;
     right = NULL;
 }
@@ -102,6 +107,7 @@ template<class type1>
     this->key = node2.key;
     this->left = node2.left;
     this->right = node2.right;
+    this->root = node2.root;
 }
 
 template < class type1 >
@@ -112,6 +118,7 @@ template < class type1 >
     if(isEmptyNode) {
         this->object = inputObject;
         this->key = inputKey;
+        this->root = this;
         isEmptyNode = false;
         return 0;
     }
@@ -123,6 +130,7 @@ template < class type1 >
                 pointer = pointer->left;
             } else {
                 pointer->left = new Node(inputObject, inputKey);
+                pointer->left->root = this->root;
                 break;
             }   
         } else {
@@ -130,6 +138,7 @@ template < class type1 >
                 pointer = pointer->right;
             } else {
                 pointer->right = new Node(inputObject, inputKey);
+                pointer->right->root = this->root;
                 break;
             }
         }
@@ -163,7 +172,7 @@ template < class type1 >
 }
 
 template<class type1>
-    Node<type1> Node<type1>::operator= (Node* obj2)
+    Node<type1> Node<type1>::operator= (Node<type1>* obj2)
 {
     this->object = obj2.object;
     this->key = obj2.key;
@@ -218,29 +227,62 @@ template<class type1>
 }
 
 template<class type1>
-    Node<type1> Node<type1>::operator+= (Node* obj2)
+    int Node<type1>::insertNodeInPlaceOfAnother(Node* insertedNode, Node* node2)
+{
+
+    Node<type1>* tempPointer;
+    
+    tempPointer = node2;
+    node2 = NULL;
+    node2 = new Node(insertedNode->object, insertedNode->key);
+    node2->root = this->root;
+    node2->left = tempPointer;
+
+    return 0;
+}
+
+template<class type1>
+    Node<type1> Node<type1>::operator+= (Node<type1>* obj2)
 {
     Node<type1>* pointer;
+    Node<type1>* tempPointer;
 
-    pointer = this;
+    pointer = root;
     while (true) {
         if (obj2->key < pointer->key) {
             if(pointer->left) {
-                pointer = pointer->left;
+                if(obj2->key > pointer->left) {
+                    insertNodeInPlaceOfAnother(obj2, pointer->left);
+                    break;
+                } else {
+                    pointer = pointer->left;
+                }
             } else {
-                pointer->left = new Node;
-                pointer->left = *obj2;
+                pointer->left = new Node(obj2->object, obj2->key);
+                pointer->left->root = this->root;
                 break;
             }   
         } else {
             if(pointer->right) {
-                pointer = pointer->right;
+                if(obj2->key > pointer->right) {
+                    insertNodeInPlaceOfAnother(obj2, pointer->right);
+                    break;
+                } else {
+                    pointer = pointer->right;
+                }
             } else {
-                pointer->right = new Node;
-                pointer->right = *obj2;
+                pointer->right = new Node(obj2.object, obj2->key);
+                pointer->left->root = this->root;
                 break;
             }
         }
+    }
+
+    if(obj2->left) {
+        root += obj2->left;
+    }
+    if(obj2->right) {
+        root += obj2->right;
     }
 
     return *this;

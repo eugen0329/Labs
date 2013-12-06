@@ -167,7 +167,7 @@ Shop::Shop()
 {
     int i, n;
     Product pr;
-    cout << "Enter the number of products" << endl;
+    cout << "Enter the number of products in the store" << endl;
     cin >> n;
 
     Product *product;

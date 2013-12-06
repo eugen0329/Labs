@@ -19,6 +19,7 @@ int main()
     while(true) {
 
 
+        cout << "The availablity of the shop" << endl << endl;
         walmart.showAvailablity();
         cout << "Set the Numbers of the products you want to buy(0 to exit)" << endl;
         
