@@ -227,7 +227,26 @@ Shop::Shop()
 
 void Shop::showAvailablity()
 {
-    cout << availability;
+    //cout << availability;
+    //for(Node<Product>::Iterator it = availability.begin(); it < availability.end(); ++it)
+    //    cout << *it;
+    //}
+    Node<Product>::Iterator it = availability.begin();
+    cout << *it;
+    ++it;
+    cout << *it;
+    it += 2;
+    cout << *it;
+    //++it;
+    //cout << *it;
+    //++it;
+    //cout << *it;
+    --it;
+    cout << *it;
+    --it;
+    cout << *it;
+    --it;
+    cout << *it;
 }
 
 

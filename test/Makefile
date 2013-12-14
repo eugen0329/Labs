@@ -1,4 +1,4 @@
-OBJ = main.o 
+OBJ = main.o products.o string.o exception.o
 CPPFLAGS = -Wall -pedantic-errors -g
 BINARY = bin
 all: $(BINARY)

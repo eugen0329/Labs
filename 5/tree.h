@@ -4,9 +4,8 @@
 #include <iostream>
 #include <stack>
 
-template < class type1 > class Node;
-template < class type1 >
-ostream& operator<< (ostream&, const Node<type1>&);
+template <class type1> class Node;
+template<class type1> ostream& operator<< (ostream&, const Node<type1>&);
 
 template <class type1> class Node {
 public:
@@ -21,7 +20,7 @@ public:
     type1 findElementWithKey(int);
     Node<type1> operator= (Node<type1>*);
     Node operator+= (Node<type1>*);
-    friend ostream& operator<< <> (ostream&, const Node<type1>&);
+    friend ostream& operator<< <type1> (ostream&, const Node<type1>&);
     
     bool isEmptyNode;
 private:
