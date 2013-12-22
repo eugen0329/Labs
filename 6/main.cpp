@@ -7,7 +7,7 @@ using namespace std;
 
 int main()
 {
-    int number;
+    //int number;
     Shop walmart;
     // {{{
     //Bucket bucket;

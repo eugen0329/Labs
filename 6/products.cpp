@@ -77,16 +77,6 @@ Product::Product(const Product& obj2) : Marker(obj2.number), Good(obj2.price), I
     this->name = obj2.name; 
 }
 
-//Product Product::operator+ (const Product& obj2)
-//{
-//    Product temp;
-//    temp.volume = obj2.volume;
-//    temp.price = obj2.price;
-//    temp.producer = obj2.producer;
-//    
-//    return temp;
-//}
-
 Product::~Product()
 {
 }
@@ -178,7 +168,7 @@ long Bucket::getSum()
 Shop::Shop()
 {
     int i = 0, n;
-    //Product temp;
+    Product temp;
 
     //cout << "Specify the number of products" << endl;
     //n = getNaturalNumber();
@@ -212,7 +202,6 @@ Shop::Shop()
     //} 
     
     Product product[6];
-    //product = new Product [6];
 
     product[0]("Bread", "flour", 5000, 1);
     product[1]("Milk", "milk", 6800, 2); 
@@ -227,12 +216,25 @@ Shop::Shop()
 
 void Shop::showAvailablity()
 {
-    cout << availability;
+    Node<Product>::Iterator iterator = availability.begin();
+
+    for (; iterator <= availability.end(); ++iterator) {
+        cout << "iteration "<< endl;
+        cout << *iterator;
+    }
+    
+    cout << "end" << endl; 
+    //cout << availability;
 }
 
 
 Product Shop::getProductByNumber(int number)
 {
+    Node<Product>::Iterator iterator; 
+
+    //for (iterator = availability.begin(); iterator < availability.end(); ++iterator) {
+    //}
+    
     return availability.findElementWithKey(number);
 }
 

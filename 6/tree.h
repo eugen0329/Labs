@@ -1,3 +1,4 @@
+
 #ifndef TREE_HPP
 #define TREE_HPP
 
@@ -8,15 +9,13 @@ template<class T> ostream& operator<< (ostream&, const Node<T>&);
 
 template <class T> class Node {
 public:
-    class Iterator;
+
     Node(T, int);
     Node();
     Node(const Node<T>&);
     ~Node();
     
-    Node<T>* begin();
-    Node<T>* end();
-
+    int getKey() { return key; }
     int keyAreExists(int);
     long getSumOfTheKeys();
     int add(T, int);
@@ -26,6 +25,30 @@ public:
     friend ostream& operator<< <T> (ostream&, const Node<T>&);
     
     bool isEmptyNode;
+    class Iterator {
+    public:
+        Iterator(); 
+        Iterator(const Iterator& otherIter);
+        Iterator(Node<T>*, Node<T>*); 
+        inline T operator * ();
+        inline Iterator operator ++();
+        inline Iterator operator --();
+        inline Iterator operator += (int);
+        inline Iterator operator -= (int);
+        inline Node<T>::Iterator operator = (const Iterator&);
+        inline bool operator < (const Iterator&);
+        inline bool operator > (const Iterator&);
+        inline bool operator == (const Iterator&);
+        inline bool operator != (const Iterator&);
+        inline bool operator >= (const Iterator&);
+        inline bool operator <= (const Iterator&);
+    private:
+        Node<T>* prev;
+        Node<T>* curr;
+    };
+
+    Iterator begin();
+    Iterator end();
 private:
     int insertNodeInPlaceOfAnother(Node<T>, Node<T>**);
     T object;
@@ -39,7 +62,7 @@ private:
 // {{{ Node Functions
 
 template < class T > 
-    Node<T>* Node<T>::begin()
+    typename Node<T>::Iterator Node<T>::begin()
 {
     Node<T>* pointer;
     
@@ -52,24 +75,37 @@ template < class T >
         }
    } 
 
-    return pointer;
+    return Node<T>::Iterator(NULL, pointer);
 }
 
 template < class T > 
-    Node<T>* Node<T>::end()
+    typename Node<T>::Iterator Node<T>::end()
 {
-    Node<T>* pointer;
+    Node<T>* curr = root;
     
-    pointer = this;
-    while(true) {
-        if(pointer->right) {
-            pointer = pointer->right;
-        } else {
-            break;
-        }
-   } 
+     while(true) {
+         if(curr->right) {
+             curr = curr->right;
+         } else {
+             break;
+         }
+    } 
 
-    return pointer;
+    Node<T>* prev = curr;
+
+    if(prev->left == NULL) { 
+        while(prev->parent->key >= prev->key) {
+            prev = prev->parent;
+        } 
+        prev = prev->parent;
+    } else {
+        prev = prev->left;
+        while(prev->right) {
+            prev = prev->right;
+        }
+    }
+
+    return Node<T>::Iterator(prev, curr);
 }
 
 template < class T > 
@@ -217,20 +253,20 @@ template < class T >
 template<class T>
     Node<T> Node<T>::operator= (Node<T>* obj2)
 {
-    this->object = obj2.object;
-    this->key = obj2.key;
+    this->object = obj2->object;
+    this->key = obj2->key;
 
-    if (obj2.left) {
+    if (obj2->left) {
         if (left) {
-            left = *obj2.left;
+            left = obj2->left;
         }
     } else if (left) {
         delete left;
     }
 
-    if (obj2.right) {
+    if (obj2->right) {
         if (right) {
-            right = *obj2.right;
+            right = obj2->right;
         }
     } else if (left) {
         delete left;
@@ -333,73 +369,136 @@ template<class T>
     return *this;
 }
 
-// }}}
+
+// }}} 
 
 // {{{ Iterator
+
 template<class T>
-class Node<T>::Iterator {
-public:
-    Iterator(Node<T>* inCurr) : curr(inCurr) {}
-    inline T operator * ();
-    inline T operator ++();
-    inline T operator --();
-    inline T operator += (int);
-    inline T operator -= (int);
-    inline bool operator < (const Iterator&);
-    inline bool operator > (const Iterator&);
-    inline bool operator == (const Iterator&);
-    inline bool operator != (const Iterator&);
-    inline bool operator >= (const Iterator&);
-    inline bool operator <= (const Iterator&);
-private:
-    Node<T>* curr;
-};
+Node<T>::Iterator::Iterator()
+{
+    curr = NULL;
+    prev = NULL;
+}
+
+template<class T>
+Node<T>::Iterator::Iterator(const Node<T>::Iterator& otherIter)
+{
+    curr = otherIter.curr;    
+    prev = otherIter.prev;
+}
+
+template<class T>
+Node<T>::Iterator::Iterator(Node<T>* inPrev, Node<T>* inCurr)
+{
+    prev = inPrev;
+    curr = inCurr;    
+}
+
+template<class T>
+typename Node<T>::Iterator Node<T>::Iterator::operator = (const Node<T>::Iterator& inIter)
+{
+    curr = inIter.curr;
+    prev = inIter.prev;
+    return *this;
+}
 
 template<class T>
 bool Node<T>::Iterator::operator <= (const Iterator& other)
 {
+    if(*this == other) {
+        return true;
+    } else if(!curr) {
+        return false;
+    } else if (!other.curr) {
+        return true;
+    }
+     
     return curr->key <= other.curr->key;
 } 
 
 template<class T>
 bool Node<T>::Iterator::operator >= (const Iterator& other)
 {
+    if(*this == other) {
+        return true;
+    } else if(!curr) {
+        return false;
+    } else if (!other.curr) {
+        return true;
+    }
+     
     return curr->key >= other.curr->key; 
 }
 
 template<class T>
 bool Node<T>::Iterator::operator != (const Iterator& other)
 {
-    return curr->key != other.curr->key;
+    if(*this == other) {
+        return false;
+    }
+     
+    return true;
 } 
 
 template<class T>
 bool Node<T>::Iterator::operator == (const Iterator& other)
 {
-    return curr->key == other.curr->key;
+    if (this->curr == other.curr && this->prev == other.prev) {
+        return true;
+    }
+    return false;
+    //return (this->curr == other.curr && this->prev == other.prev) ;
 } 
 
 template<class T>
 bool Node<T>::Iterator::operator < (const Iterator& other)
 {
+    if(!curr) {
+        return false;
+    } else if (!other.curr) {
+        return true;
+    }
+
     return curr->key < other.curr->key;
 } 
 
 template<class T>
 bool Node<T>::Iterator::operator > (const Iterator& other)
 {
+    if(!curr) {
+        return false;
+    } else if (!other.curr) {
+        return true;
+    }
+
     return curr->key > other.curr->key;
 } 
 
 template<class T>
 T Node<T>::Iterator::operator * ()
 {
-        return curr->object;
+    if(!curr) {
+        exit(1);
+    }
+    return curr->object;
 }
 
 template<class T>
-T Node<T>::Iterator::operator ++ ()
+typename Node<T>::Iterator Node<T>::Iterator::operator ++ ()
 {
+    if(!curr) {
+        cout << "if(!curr)" << endl;
+        return *this;
+    }
+
+    if(*this == curr->end()) {
+        prev = curr; 
+        curr = NULL;
+        return *this;
+    }
+    
+    prev = curr; 
     if(curr->right == NULL) { 
         while(curr->parent->key < curr->key) {
             curr = curr->parent;
@@ -412,29 +511,42 @@ T Node<T>::Iterator::operator ++ ()
         }
     }
 
-    return curr->object;
+    return *this;
 }
 
 template<class T>
-T Node<T>::Iterator::operator -- ()
+typename Node<T>::Iterator Node<T>::Iterator::operator -- ()
 {
-    if(curr->left == NULL) { 
-        while(curr->parent->key >= curr->key) {
-            curr = curr->parent;
+    if(!prev) {
+        //cout << "if(!curr)" << endl;
+        return *this;
+    }
+    curr = prev; 
+
+    if(*this == curr->end()) {
+        //cout << "if(this == curr->end())" << endl;
+        prev = NULL;
+        return *this;
+        cout << " -- " << endl;
+    }
+    
+    if(prev->left == NULL) { 
+        while(prev->parent->key >= prev->key) {
+            prev = prev->parent;
         } 
-        curr = curr->parent;
+        prev = prev->parent;
     } else {
-        curr = curr->left;
-        while(curr->right) {
-            curr = curr->right;
+        prev = prev->left;
+        while(prev->right) {
+            prev = prev->right;
         }
     }
 
-    return curr->object;
+    return *this;
 }
 
 template<class T>
-T Node<T>::Iterator::operator += (int incrementValue)
+typename Node<T>::Iterator Node<T>::Iterator::operator += (int incrementValue)
 {
     int i;
     Node<T>::Iterator it = curr;
@@ -444,11 +556,11 @@ T Node<T>::Iterator::operator += (int incrementValue)
     }
     this->curr = it.curr;
 
-    return curr->object;
+    return *this;
 }
 
 template<class T>
-T Node<T>::Iterator::operator -= (int decrementValue)
+typename Node<T>::Iterator  Node<T>::Iterator::operator -= (int decrementValue)
 {
     int i;
     Node<T>::Iterator it = curr;
@@ -458,7 +570,7 @@ T Node<T>::Iterator::operator -= (int decrementValue)
     }
     this->curr = it.curr;
 
-    return curr->object;
+    return *this; 
 }
 
 // }}}
