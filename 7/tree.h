@@ -24,6 +24,8 @@ public:
     Node<T> operator+= (Node<T>*);
     friend ostream& operator<< <T> (ostream&, const Node<T>&);
     
+    int size();
+    
     bool isEmptyNode;
     class Iterator {
     public:
@@ -61,6 +63,18 @@ private:
 };
 
 // {{{ Node Functions
+
+template < class T > 
+    int Node<T>::size()
+{
+    int counter = 1;
+    
+    for(Node<T>::Iterator it = this->begin(); it < this->end(); ++it) {
+        counter++;
+    }
+
+    return counter;
+}
 
 template < class T > 
     typename Node<T>::Iterator Node<T>::begin()

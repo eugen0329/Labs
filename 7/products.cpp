@@ -25,12 +25,12 @@ Ingredients::Ingredients(const char* consist)
     this->consist = consist;
 }
 
-Ingredients::Ingredients(const String& consist)
+Ingredients::Ingredients(const string& consist)
 {
     this->consist = consist;
 }
 
-String Ingredients::getConsist()
+string Ingredients::getConsist()
 {
     return consist;
 }
@@ -139,6 +139,7 @@ istream& operator>>(istream &in, Product& obj) throw(BadInput, WrongData)
 Bucket::Bucket()
 {
     this->products = new Node<Product>;
+    isFree = true;
 }
 
 Bucket::~Bucket()
@@ -150,12 +151,31 @@ void Bucket::freeBucket()
 {
     if(!products) {
         delete products;
+        isFree = true;
     }
+}
+
+int Bucket::showProducts()
+{
+    //Node<Product>::Iterator iterator = products->begin();
+
+    //for (; iterator <= products->end(); ++iterator) {
+    //    cout << *iterator;
+    //    cout << endl;
+    //}
+    if(!isFree) {
+        cout << *products;
+    } else {
+        cout << "empty" << endl;
+    }
+
+    return 0;
 }
 
 void Bucket::addToTheBucket(Product inputObject)
 {
     products->add(inputObject, inputObject.getPrice());
+    isFree = false;
 }
 
 long Bucket::getSum()
@@ -167,7 +187,7 @@ long Bucket::getSum()
 
 Shop::Shop()
 {
-    int i = 0, n;
+    int i = 0;
     Product temp;
 
     //cout << "Specify the number of products" << endl;
@@ -219,8 +239,8 @@ void Shop::showAvailablity()
     Node<Product>::Iterator iterator = availability.begin();
 
     for (; iterator <= availability.end(); ++iterator) {
-        cout << "iteration "<< endl;
         cout << *iterator;
+        cout << endl;
     }
     
     //cout << availability;
@@ -340,3 +360,17 @@ int getNaturalNumber(bool allowZero)
     return number;
 }
 
+
+int inputNumberInRange(const int from, const int to)
+{
+    int number;
+    while(true) {
+        cin >> number;
+        if(from <= number && number <= to) {
+            break; 
+        } else {
+            cout << "Specify number from" << from << " to " << to << endl;
+        }
+    }
+    return number;
+}
